@@ -12,7 +12,7 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: 250px 200px;
+  grid-template-columns: 550px 300px;
   justify-content: center;
   justify-items: center;
   grid-gap:10px;
@@ -20,8 +20,8 @@ body {
 }
 .playground {
   display: grid;
-  width: 250px;
-  height: 250px;
+  width: 550px;
+  height: 550px;
   grid-template-areas:
     "b1 b2 b3"
     "b4 b5 b6"
