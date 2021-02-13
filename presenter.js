@@ -3,7 +3,7 @@ function move(i) {
   model.move(i);
 }
 let shouldShow = true;
-let visibleTime = 15;
+let visibleTime = 10;
 // let unvisible = "X";
 
 function start(showNum) {
@@ -70,7 +70,10 @@ function renderTimer() {
     }
   }
 }
-
+function renderComment() {
+    document.getElementById("comment-num").innerText=visibleTime;
+}
 // init
 render();
 renderTimer();
+renderComment();
