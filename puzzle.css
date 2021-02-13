@@ -15,15 +15,17 @@ body {
   grid-template-columns: 250px 200px;
   justify-content: center;
   justify-items: center;
+  grid-gap:10px;
   /* align-items: center; */
 }
 .playground {
   display: grid;
-  width: 200px;
-  height: 200px;
-  grid-template-areas: "b1 b2 b3"
-  "b4 b5 b6"
-  "b7 b8 b9";
+  width: 250px;
+  height: 250px;
+  grid-template-areas:
+    "b1 b2 b3"
+    "b4 b5 b6"
+    "b7 b8 b9";
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
@@ -32,28 +34,40 @@ body {
 
 .item {
   /* text-align: center; */
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  border:1px solid lightgrey;
-  width:96%;
-  height:96%;
+  border: 1px solid lightgrey;
+  width: 96%;
+  height: 96%;
   background-color: lightgrey;
   font-size: xx-large;
-  color:white;
+  color: white;
 }
+.control {
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+    align-items: center;
+}
+
 .control-button {
+  /* flex-grow:0; */
   display: block;
   margin: 10px;
   padding: 5px 10px;
 }
 
-.success{
-  color:red;
+.success {
+  color: red;
   display: block;
   text-align: center;
 }
+.comment {
+  color: darkgrey;
+  font-size: small;
+}
 
-.success.hidden{
-  display:none ;
+.success.hidden {
+  display: none;
 }
