@@ -1,18 +1,39 @@
 let r = 3;
 const R = r * r;
 
-const model = {
-  dataPos: [],
-  finished: true,
-  success: false,
-  listeners: [],
-  dir: [-3, 1, 3, -1],
-  move: function (i) {
+class Model{
+  constructor(){
+    this.listeners=[]
+  }
+  notifyAll() {
+    for (let i = 0; i < this.listeners.length; i++) {
+      this.listeners[i].notify();
+    }
+  }
+  addListener(listener) {
+    this.listeners.push(listener);
+  }
+}
+
+
+class GameModel extends Model{
+  constructor(){
+    super();
+    this.dataPos=[];
+    this.finished=true;
+    this.success=false;
+    this.dir=[-3, 1, 3, -1];
+    for (let i = 0; i <= R; i++) {
+      this.dataPos[i] = i;
+    }
+  }
+
+  move (i) {
     if (this.finished) {
       return;
     }
-    var pos = this.dataPos[i];
-    for (var j = 0; j < this.dir.length; j++) {
+    let pos = this.dataPos[i];
+    for (let j = 0; j < this.dir.length; j++) {
       let x = this.dir[j];
       let newPos = pos + x;
       if (newPos > 0 && newPos <= R && this.dataPos[R] == newPos) {
@@ -23,24 +44,21 @@ const model = {
         return;
       }
     }
-  },
-  onCreate: function () {
-    for (var i = 0; i <= R; i++) {
-      this.dataPos[i] = i;
-    }
-  },
-  reset: function () {
+  }
+
+  reset() {
     do {
       this.shuffle();
     } while (!(this.valid() && !this.checkSuccess()));
     this.finished = false;
     this.success = false;
     this.notifyAll();
-  },
-  shuffle: function () {
+  }
+
+  shuffle() {
     // shuffle the array  randomly
     const arr = [];
-    for (var i = 1; i <= R; i++) {
+    for (let i = 1; i <= R; i++) {
       arr.push({
         val: i,
         priority: Math.random(),
@@ -49,28 +67,30 @@ const model = {
     arr.sort(function (a, b) {
       return a.priority - b.priority;
     });
-    for (var i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       this.dataPos[arr[i].val] = i + 1;
     }
-  },
-  valid: function () {
+  }
+
+  valid() {
     if ((r & 1) == 0) {
       // even.
       // todo
       return false;
     }
     let cnt = 0;
-    for (var i = 2; i < R; i++) {
-      for (var j = 1; j < i; j++) {
+    for (let i = 2; i < R; i++) {
+      for (let j = 1; j < i; j++) {
         if (this.dataPos[j] > this.dataPos[i]) {
           cnt++;
         }
       }
     }
     return (cnt & 1) == 0;
-  },
-  checkSuccess: function () {
-    for (var i = 1; i < R; i++) {
+  }
+
+  checkSuccess() {
+    for (let i = 1; i < R; i++) {
       if (this.dataPos[i] != i) {
         this.finished = false;
         this.success = false;
@@ -80,61 +100,56 @@ const model = {
     this.finished = true;
     this.success = true;
     return true;
-  },
-  notifyAll: function () {
-    for (var i = 0; i < this.listeners.length; i++) {
-      this.listeners[i].notify();
-    }
-  },
-  addListener: function (listener) {
-    this.listeners.push(listener);
-  },
-};
+  }
 
-const timerModel = {
-  time: 0,
-  intervalId: null,
-  setTime: function (i) {
-    this.time = i;
+}
+
+class TimerModel extends Model{
+  constructor(){
+    super();
+    this._time=0;
+    this.intervalId= null;
+  }
+
+  get time(){
+    return this._time;
+  }
+
+  set time(i) {
+    this._time = i;
     this.notifyAll();
-  },
-  listeners: [],
-  onCreate: function () {},
-  start: function () {
+  }
+
+  start() {
     if (this.intervalId != null) {
       clearInterval(this.intervalId);
     }
     this.intervalId = setInterval(() => {
-      this.setTime(this.time + 1);
+      this.time=this.time + 1;
     }, 1000);
-  },
-  stop: function () {
+  }
+
+  stop() {
     if (this.intervalId == null) {
       return;
     }
     clearInterval(this.intervalId);
-  },
-  reset: function () {
+  }
+
+  reset() {
     if (this.intervalId != null) {
       clearInterval(this.intervalId);
     }
     this.intervalId = null;
-    this.setTime(0);
-  },
-  addListener: function (listener) {
-    this.listeners.push(listener);
-  },
-  notifyAll: function () {
-    for (var i = 0; i < this.listeners.length; i++) {
-      this.listeners[i].notify();
-    }
-  },
-};
+    this.time=0;
+  }
+  
+}
 
-model.onCreate();
-timerModel.onCreate();
 
-// debug
-// for (var i = 1; i <= R; i++) {
-//   model.dataPos[R - i] = i;
-// }
+
+
+let model = new GameModel();
+let timerModel=new TimerModel();
+
+// export {r,R,model,timerModel};
