@@ -1,0 +1,33 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="puzzle.css" />
+</head>
+<body>
+  <main class="container">
+    <div class="playground">
+      <div class="item" id="d1" onclick="move(1)">1</div>
+      <!--小DIV，也就是8个小方块。当点击的时候执行move()函数，参数是显示的编号，这样我们就知道点击了那个方块-->
+      <div class="item" id="d2" onclick="move(2)"><span>2</span></div>
+      <div class="item" id="d3" onclick="move(3)">3</div>
+      <div class="item" id="d4" onclick="move(4)">4</div>
+      <div class="item" id="d5" onclick="move(5)">5</div>
+      <div class="item" id="d6" onclick="move(6)">6</div>
+      <div class="item" id="d7" onclick="move(7)">7</div>
+      <div class="item" id="d8" onclick="move(8)">8</div>
+    </div>
+    <div class="control">
+      <p>
+        <span id="success-text" class="success hidden">你赢啦</span>
+        <span>总用时</span>
+        <span id="timer">0</span>
+        秒
+      </p>
+      <p>
+        <button class="control-button" onclick="start(true)">开始(简单)</button>
+        <button class="control-button" onclick="start(false)">开始(盲棋)</button>
+        <!-- <button class="control-button" onclick="reset()">重置</button> -->
+      </p>
+    </div>
+    <script type="text/javascript" src="model.js"></script>
+    <script type="text/javascript" src="presenter.js"></script>
+  </main>
+</body>
