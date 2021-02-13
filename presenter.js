@@ -1,3 +1,5 @@
+// import {r,R,model,timerModel} from 'model';
+
 // add listener for view--presenter
 function move(i) {
   model.move(i);
