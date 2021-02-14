@@ -37,6 +37,7 @@ timerModel.addListener(timerListener);
 
 // render
 function render() {
+  // render playground
   for (var i = 1; i < R; i++) {
     var domEle = document.getElementById("d" + i);
     var target = "b" + model.dataPos[i];
@@ -45,11 +46,15 @@ function render() {
       domEle.style.setProperty("grid-area", target);
     }
   }
+  // render success text
   if (model.finished && model.success) {
     timerModel.stop();
     document
-      .getElementById("success-text")
-      .style.setProperty("display", "block");
+      .getElementById("success-text").classList.remove("hidden");
+      //.style.setProperty("display", "block");
+  }else{
+    document
+      .getElementById("success-text").classList.add("hidden");
   }
 }
 
