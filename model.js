@@ -22,6 +22,7 @@ class GameModel extends Model {
     this.finished = true;
     this.success = false;
     this._giveUp = false;
+    this.canMove=true;
     this.dir = [-3, 1, 3, -1];
     for (let i = 0; i <= R; i++) {
       this.dataPos[i] = i;
@@ -29,7 +30,7 @@ class GameModel extends Model {
   }
 
   move(i) {
-    if (this.finished) {
+    if (this.finished || !this.canMove) {
       return;
     }
     let pos = this.dataPos[i];
@@ -53,6 +54,7 @@ class GameModel extends Model {
     this.finished = false;
     this.success = false;
     this.giveUp = false;
+    this.canMove=true;
     this.notifyAll();
   }
 
@@ -107,12 +109,12 @@ class GameModel extends Model {
     return this._giveUp;
   }
 
-  set giveUp(t){
-    if(this.finished){
+  set giveUp(t) {
+    if (this.finished) {
       return;
     }
-    this._giveUp=t;
-    if(!t){
+    this._giveUp = t;
+    if (!t) {
       return;
     }
     this.finished = true;
