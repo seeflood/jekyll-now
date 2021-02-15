@@ -1,9 +1,9 @@
 let r = 3;
 const R = r * r;
 
-class Model{
-  constructor(){
-    this.listeners=[]
+class Model {
+  constructor() {
+    this.listeners = [];
   }
   notifyAll() {
     for (let i = 0; i < this.listeners.length; i++) {
@@ -15,20 +15,20 @@ class Model{
   }
 }
 
-
-class GameModel extends Model{
-  constructor(){
+class GameModel extends Model {
+  constructor() {
     super();
-    this.dataPos=[];
-    this.finished=true;
-    this.success=false;
-    this.dir=[-3, 1, 3, -1];
+    this.dataPos = [];
+    this.finished = true;
+    this.success = false;
+    this._giveUp = false;
+    this.dir = [-3, 1, 3, -1];
     for (let i = 0; i <= R; i++) {
       this.dataPos[i] = i;
     }
   }
 
-  move (i) {
+  move(i) {
     if (this.finished) {
       return;
     }
@@ -52,6 +52,7 @@ class GameModel extends Model{
     } while (!(this.valid() && !this.checkSuccess()));
     this.finished = false;
     this.success = false;
+    this.giveUp = false;
     this.notifyAll();
   }
 
@@ -102,16 +103,32 @@ class GameModel extends Model{
     return true;
   }
 
-}
-
-class TimerModel extends Model{
-  constructor(){
-    super();
-    this._time=0;
-    this.intervalId= null;
+  get giveUp() {
+    return this._giveUp;
   }
 
-  get time(){
+  set giveUp(t){
+    if(this.finished){
+      return;
+    }
+    this._giveUp=t;
+    if(!t){
+      return;
+    }
+    this.finished = true;
+    this.success = false;
+    this.notifyAll();
+  }
+}
+
+class TimerModel extends Model {
+  constructor() {
+    super();
+    this._time = 0;
+    this.intervalId = null;
+  }
+
+  get time() {
     return this._time;
   }
 
@@ -125,7 +142,7 @@ class TimerModel extends Model{
       clearInterval(this.intervalId);
     }
     this.intervalId = setInterval(() => {
-      this.time=this.time + 1;
+      this.time = this.time + 1;
     }, 1000);
   }
 
@@ -141,15 +158,11 @@ class TimerModel extends Model{
       clearInterval(this.intervalId);
     }
     this.intervalId = null;
-    this.time=0;
+    this.time = 0;
   }
-  
 }
 
-
-
-
 let model = new GameModel();
-let timerModel=new TimerModel();
+let timerModel = new TimerModel();
 
 // export {r,R,model,timerModel};
