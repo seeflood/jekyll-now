@@ -80,21 +80,23 @@ function renderTimer() {
   var timerEle = document.getElementById("timer");
   if (canMoveWhenPrepare) {
     timerEle.innerHTML = timerModel.time;
-  } else {
-    if (timerModel.time < visibleTime) {
-      document.getElementById("timecount-text").classList.add("hidden");
-      document.getElementById("countdown-text").classList.remove("hidden");
-      model.canMove=false;
-      timerEle.innerHTML = visibleTime - timerModel.time;
-    } else {
-      document.getElementById("countdown-text").classList.add("hidden");
-      document.getElementById("timecount-text").classList.remove("hidden");
-      model.canMove=true;
-      timerEle.innerHTML = timerModel.time - visibleTime;
-    }
+    renderItemColor();
+    return;
   }
-
-  renderItemColor();
+  // middle level
+  if (timerModel.time < visibleTime) {
+    document.getElementById("timecount-text").classList.add("hidden");
+    document.getElementById("countdown-text").classList.remove("hidden");
+    model.canMove = false;
+    timerEle.innerHTML = visibleTime - timerModel.time;
+    doRenderItemColor(true);
+  } else {
+    document.getElementById("countdown-text").classList.add("hidden");
+    document.getElementById("timecount-text").classList.remove("hidden");
+    model.canMove = true;
+    timerEle.innerHTML = timerModel.time - visibleTime;
+    doRenderItemColor(false);
+  }
 }
 
 function renderItemColor() {
