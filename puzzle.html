@@ -17,13 +17,15 @@
       <p>
         <span id="success-text" class="success hidden">你赢啦</span>
         <span id="give-up-text" class="give-up hidden">人生中遇到的问题可比这难多了，这么简单的问题都要放弃，你的人生得有多失败呀？</span>
-        <span>总用时</span>
+        <span id="timecount-text">总用时</span>
+        <span id="countdown-text" class="hidden">倒计时</span>
         <span id="timer">0</span>
         秒
       </p>
       <!-- <p> -->
-        <button class="control-button" onclick="start(true)">开始(简单)</button>
-        <button class="control-button" onclick="start(false)">开始(盲棋)</button>
+        <button class="control-button" onclick="start(true,true)">开始(简单)</button>
+        <button class="control-button" onclick="start(false,true)">开始(盲棋)</button>
+        <button class="control-button middle" onclick="start(false,false)">开始(盲棋·中级)</button>
         <button class="control-button" id="give-up" onclick="giveUp()">放弃</button>
         <!-- <button class="control-button" onclick="reset()">重置</button> -->
       <!-- </p> -->
