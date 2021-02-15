@@ -1,6 +1,7 @@
 // import {r,R,model,timerModel} from 'model';
 
 let shouldShow = true;
+let canMoveWhenPrepare = true;
 const visibleTime = 10;
 
 // add listener for view--presenter
@@ -9,7 +10,8 @@ function move(i) {
 }
 // let unvisible = "X";
 
-function start(showNum) {
+function start(showNum, needPrepare) {
+  canMoveWhenPrepare = needPrepare;
   shouldShow = showNum;
   model.reset();
   timerModel.reset();
@@ -76,7 +78,22 @@ function render() {
 // render timer
 function renderTimer() {
   var timerEle = document.getElementById("timer");
-  timerEle.innerHTML = timerModel.time;
+  if (canMoveWhenPrepare) {
+    timerEle.innerHTML = timerModel.time;
+  } else {
+    if (timerModel.time < visibleTime) {
+      document.getElementById("timecount-text").classList.add("hidden");
+      document.getElementById("countdown-text").classList.remove("hidden");
+      model.canMove=false;
+      timerEle.innerHTML = visibleTime - timerModel.time;
+    } else {
+      document.getElementById("countdown-text").classList.add("hidden");
+      document.getElementById("timecount-text").classList.remove("hidden");
+      model.canMove=true;
+      timerEle.innerHTML = timerModel.time - visibleTime;
+    }
+  }
+
   renderItemColor();
 }
 
