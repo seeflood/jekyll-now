@@ -5,7 +5,6 @@
   <main class="container">
     <div class="playground">
       <div class="item" id="d1" onclick="move(1)">1</div>
-      <!--小DIV，也就是8个小方块。当点击的时候执行move()函数，参数是显示的编号，这样我们就知道点击了那个方块-->
       <div class="item" id="d2" onclick="move(2)">2</div>
       <div class="item" id="d3" onclick="move(3)">3</div>
       <div class="item" id="d4" onclick="move(4)">4</div>
@@ -17,6 +16,7 @@
     <div class="control">
       <p>
         <span id="success-text" class="success hidden">你赢啦</span>
+        <span id="give-up-text" class="give-up hidden">人生中遇到的问题可比这难多了，这么简单的问题都要放弃，你的人生得有多失败呀？</span>
         <span>总用时</span>
         <span id="timer">0</span>
         秒
@@ -24,6 +24,7 @@
       <!-- <p> -->
         <button class="control-button" onclick="start(true)">开始(简单)</button>
         <button class="control-button" onclick="start(false)">开始(盲棋)</button>
+        <button class="control-button" id="give-up" onclick="giveUp()">放弃</button>
         <!-- <button class="control-button" onclick="reset()">重置</button> -->
       <!-- </p> -->
       <span class="comment">注：在盲棋模式中，<span id="comment-num"></span>秒之后数字会消失哦</span>
